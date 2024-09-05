@@ -50,6 +50,11 @@ class Question1(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': "",
             'roundHistory': "",
             'tableRandomNumberHistory': "",
@@ -72,6 +77,11 @@ class Question2(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': "",
             'roundHistory': "",
             'tableRandomNumberHistory': "",
@@ -94,6 +104,11 @@ class Question3(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': ",2",
             'roundHistory': ",1",
             'tableRandomNumberHistory': ",3",
@@ -116,6 +131,11 @@ class Question4(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': ",2",
             'roundHistory': ",1",
             'tableRandomNumberHistory': ",3",
@@ -138,6 +158,11 @@ class Question5(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': ",2",
             'roundHistory': ",1",
             'tableRandomNumberHistory': ",3",
@@ -160,6 +185,11 @@ class Question6(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': "",
             'roundHistory': "",
             'tableRandomNumberHistory': "",
@@ -182,6 +212,11 @@ class Question7(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': "",
             'roundHistory': "",
             'tableRandomNumberHistory': "",
@@ -204,6 +239,11 @@ class Question8(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': ",1,1,1,3,2",
             'roundHistory': ",1,2,3,4,5",
             'tableRandomNumberHistory': ",2,2,4,2,4",
@@ -226,6 +266,11 @@ class Question9(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': ",1,1,1,3,2",
             'roundHistory': ",1,2,3,4,5",
             'tableRandomNumberHistory': ",2,2,4,2,4",
@@ -248,6 +293,11 @@ class Question10(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': ",1,1,1,3,2",
             'roundHistory': ",1,2,3,4,5",
             'tableRandomNumberHistory': ",2,2,4,2,4",

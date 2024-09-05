@@ -836,6 +836,79 @@ class Player(BasePlayer):
     myPayoffHistory = models.StringField()
     otherPayoffHistory = models.StringField()
 
+    def init_match_player(player):
+        player.myChoiceHistory = ""
+        player.myPayoffHistory = ""
+        player.tableRandomNumberHistory = ""
+        player.tableNumberHistory = ""
+        player.otherChoiceHistory = ""
+        player.otherPayoffHistory = ""
+        player.rollHistory = ""
+        player.roundHistory = ""
+        player.roundNumber = 1
+        if player.id_in_group == 1:
+            seq_id = player.session.config['Sequence'] - 1
+            if player.session.config['CutoffRoll'] == 7:
+                crit_rounds = Constants.cumul7[seq_id]
+            if player.session.config['CutoffRoll'] == 9:
+                crit_rounds = Constants.cumul9[seq_id]
+            if player.session.config['CutoffRoll'] == 11:
+                crit_rounds = Constants.cumul11[seq_id]
+            crit_rounds[0] = 0
+            player.matchNumber = int(np.argwhere(crit_rounds == player.round_number - 1)[0][0] + 1)
+            player.tableRandomNumber = np.random.choice([2, 3, 4])
+            player.tableNumber = player.tableRandomNumber
+            for p in player.get_others_in_group():
+                p.matchNumber = player.matchNumber
+                p.tableRandomNumber = player.tableRandomNumber
+                p.tableNumber = player.tableRandomNumber
+
+    def update_history(player):
+        player.rollHistory += "," + str(player.roll)
+        player.roundHistory += "," + str(player.roundNumber)
+        player.tableNumberHistory += "," + str(player.tableNumber)
+        player.tableRandomNumberHistory += "," + str(player.tableRandomNumber)
+        player.myChoiceHistory += "," + str(player.myChoice)
+        player.myPayoffHistory += "," + str(player.myPayoff)
+        for p in player.get_others_in_group():
+            player.otherChoiceHistory += "," + str(p.myChoice)
+            player.otherPayoffHistory += "," + str(p.myPayoff)
+
+    def init_round_player(player):
+        player.myChoiceHistory = player.in_round(player.round_number - 1).myChoiceHistory
+        player.myPayoffHistory = player.in_round(player.round_number - 1).myPayoffHistory
+        player.otherChoiceHistory = player.in_round(player.round_number - 1).otherChoiceHistory
+        player.otherPayoffHistory = player.in_round(player.round_number - 1).otherPayoffHistory
+        player.tableNumberHistory = player.in_round(player.round_number - 1).tableNumberHistory
+        player.tableRandomNumberHistory = player.in_round(
+            player.round_number - 1
+        ).tableRandomNumberHistory
+        player.roundHistory = player.in_round(player.round_number - 1).roundHistory
+        player.rollHistory = player.in_round(player.round_number - 1).rollHistory
+        player.matchNumber = player.in_round(player.round_number - 1).matchNumber
+        seq_id = player.session.config['Sequence'] - 1
+        if player.session.config['CutoffRoll'] == 7:
+            crit_rounds = Constants.cumul7[seq_id]
+        if player.session.config['CutoffRoll'] == 9:
+            crit_rounds = Constants.cumul9[seq_id]
+        if player.session.config['CutoffRoll'] == 11:
+            crit_rounds = Constants.cumul11[seq_id]
+        crit_rounds[0] = 0
+        player.roundNumber = int(player.round_number - crit_rounds[player.matchNumber - 1])
+        if player.id_in_group == 1:
+            leftover = (
+                    player.in_round(player.round_number - 1).tableNumber
+                    - player.in_round(player.round_number - 1).myChoice
+                    - 1
+            )
+            for p in player.get_others_in_group():
+                leftover -= p.in_round(player.round_number - 1).myChoice + 1
+            leftover = max(leftover, 0)
+            player.tableRandomNumber = np.random.choice([2, 3, 4])
+            player.tableNumber = min(leftover + player.tableRandomNumber, 4)
+            for p in player.get_others_in_group():
+                p.tableRandomNumber = player.tableRandomNumber
+                p.tableNumber = player.tableNumber
 
 # FUNCTIONS
 def get_round_outcomes(group: Group):
@@ -863,14 +936,14 @@ def get_round_outcomes(group: Group):
     p2.update_history()
 
 
-def init_match(group: Group):
+def init_match_group(group: Group):
     for p in group.get_players():
-        p.init_match()
+        p.init_match_player()
 
 
-def init_round(group: Group):
+def init_round_group(group: Group):
     for p in group.get_players():
-        p.init_round()
+        p.init_round_player()
 
 
 def creating_session(subsession: Subsession):
@@ -889,81 +962,13 @@ def creating_session(subsession: Subsession):
         subsession.group_like_round(subsession.round_number - 1)
 
 
-def init_match(player: Player):
-    player.myChoiceHistory = ""
-    player.myPayoffHistory = ""
-    player.tableRandomNumberHistory = ""
-    player.tableNumberHistory = ""
-    player.otherChoiceHistory = ""
-    player.otherPayoffHistory = ""
-    player.rollHistory = ""
-    player.roundHistory = ""
-    player.roundNumber = 1
-    if player.id_in_group == 1:
-        seq_id = player.session.config['Sequence'] - 1
-        if player.session.config['CutoffRoll'] == 7:
-            crit_rounds = Constants.cumul7[seq_id]
-        if player.session.config['CutoffRoll'] == 9:
-            crit_rounds = Constants.cumul9[seq_id]
-        if player.session.config['CutoffRoll'] == 11:
-            crit_rounds = Constants.cumul11[seq_id]
-        crit_rounds[0] = 0
-        player.matchNumber = np.argwhere(crit_rounds == player.round_number - 1)[0][0] + 1
-        player.tableRandomNumber = np.random.choice([2, 3, 4])
-        player.tableNumber = player.tableRandomNumber
-        for p in player.get_others_in_group():
-            p.matchNumber = player.matchNumber
-            p.tableRandomNumber = player.tableRandomNumber
-            p.tableNumber = player.tableRandomNumber
 
 
-def init_round(player: Player):
-    player.myChoiceHistory = player.in_round(player.round_number - 1).myChoiceHistory
-    player.myPayoffHistory = player.in_round(player.round_number - 1).myPayoffHistory
-    player.otherChoiceHistory = player.in_round(player.round_number - 1).otherChoiceHistory
-    player.otherPayoffHistory = player.in_round(player.round_number - 1).otherPayoffHistory
-    player.tableNumberHistory = player.in_round(player.round_number - 1).tableNumberHistory
-    player.tableRandomNumberHistory = player.in_round(
-        player.round_number - 1
-    ).tableRandomNumberHistory
-    player.roundHistory = player.in_round(player.round_number - 1).roundHistory
-    player.rollHistory = player.in_round(player.round_number - 1).rollHistory
-    player.matchNumber = player.in_round(player.round_number - 1).matchNumber
-    seq_id = player.session.config['Sequence'] - 1
-    if player.session.config['CutoffRoll'] == 7:
-        crit_rounds = Constants.cumul7[seq_id]
-    if player.session.config['CutoffRoll'] == 9:
-        crit_rounds = Constants.cumul9[seq_id]
-    if player.session.config['CutoffRoll'] == 11:
-        crit_rounds = Constants.cumul11[seq_id]
-    crit_rounds[0] = 0
-    player.roundNumber = int(player.round_number - crit_rounds[player.matchNumber - 1])
-    if player.id_in_group == 1:
-        leftover = (
-            player.in_round(player.round_number - 1).tableNumber
-            - player.in_round(player.round_number - 1).myChoice
-            - 1
-        )
-        for p in player.get_others_in_group():
-            leftover -= p.in_round(player.round_number - 1).myChoice + 1
-        leftover = max(leftover, 0)
-        player.tableRandomNumber = np.random.choice([2, 3, 4])
-        player.tableNumber = min(leftover + player.tableRandomNumber, 4)
-        for p in player.get_others_in_group():
-            p.tableRandomNumber = player.tableRandomNumber
-            p.tableNumber = player.tableNumber
 
 
-def update_history(player: Player):
-    player.rollHistory += "," + str(player.roll)
-    player.roundHistory += "," + str(player.roundNumber)
-    player.tableNumberHistory += "," + str(player.tableNumber)
-    player.tableRandomNumberHistory += "," + str(player.tableRandomNumber)
-    player.myChoiceHistory += "," + str(player.myChoice)
-    player.myPayoffHistory += "," + str(player.myPayoff)
-    for p in player.get_others_in_group():
-        player.otherChoiceHistory += "," + str(p.myChoice)
-        player.otherPayoffHistory += "," + str(p.myPayoff)
+
+
+
 
 
 # PAGES
@@ -984,6 +989,18 @@ class visibilityAnnouncement(Page):
         crit_rounds[0] = 0
         player.matchNumber = int(np.sum(np.array(crit_rounds) < player.round_number))
         return {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoiceHistory': None,
+            'otherChoiceHistory': None,
+            'myPayoffHistory': None,
+            'otherPayoffHistory': None,
+            'tableRandomNumberHistory': None,
+            'tableNumberHistory': None,
+            'rollHistory': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'FirstMatch': player.matchNumber,
             'LastMatch': int(player.session.config['Matches']),
             'Drawn': player.session.config['ShowQueue'],
@@ -1020,9 +1037,9 @@ class p01_WaitForGroup(WaitPage):
             crit_rounds = Constants.cumul11[seq_id]
         crit_rounds[0] = 0
         if (group.round_number - 1) in crit_rounds:
-            init_match(group)
+            init_match_group(group)
         else:
-            init_round(group)
+            init_round_group(group)
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -1038,6 +1055,18 @@ class p01_WaitForGroup(WaitPage):
         temp = {
             'matchNumber': player.matchNumber,
             'CutoffRoll': int(player.session.config['CutoffRoll']),
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoiceHistory': None,
+            'otherChoiceHistory': None,
+            'myPayoffHistory': None,
+            'otherPayoffHistory': None,
+            'tableRandomNumberHistory': None,
+            'tableNumberHistory': None,
+            'rollHistory': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
         }
         return temp
 
@@ -1093,6 +1122,8 @@ class p02_Round(Page):
             'tableRandomNumber': player.tableRandomNumber,
             'ShowQueue': player.session.config['ShowQueue'] == 'before',
             'CutoffRoll': int(player.session.config['CutoffRoll']),
+            'myChoice': None,
+            'otherChoice': None,
         }
         return temp
 
@@ -1173,6 +1204,11 @@ class p04_postMatch(Page):
             'tableNumber': player.tableNumber,
             'tableRandomNumber': player.tableRandomNumber,
             'CutoffRoll': int(player.session.config['CutoffRoll']),
+
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
+
         }
         return temp
 

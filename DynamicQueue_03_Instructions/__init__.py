@@ -34,6 +34,18 @@ class Instructions(Page):
             'PointsPerDollar': int(1.0 / player.session.config['real_world_currency_per_point']),
             'ShowUpFee': int(player.session.config['participation_fee']),
             'CutoffRoll': int(player.session.config['CutoffRoll']),
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoiceHistory': None,
+            'otherChoiceHistory':None,
+            'myPayoffHistory': None,
+            'otherPayoffHistory': None,
+            'tableRandomNumberHistory': None,
+            'tableNumberHistory': None,
+            'rollHistory': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
         }
 
 
@@ -66,6 +78,18 @@ class PayoffDetails(Page):
             'PointsPerDollar': int(1.0 / player.session.config['real_world_currency_per_point']),
             'ShowUpFee': int(player.session.config['participation_fee']),
             'CutoffRoll': int(player.session.config['CutoffRoll']),
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoiceHistory': None,
+            'otherChoiceHistory': None,
+            'myPayoffHistory': None,
+            'otherPayoffHistory': None,
+            'tableRandomNumberHistory': None,
+            'tableNumberHistory': None,
+            'rollHistory': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
         }
 
 
@@ -76,6 +100,19 @@ class PayoffExample(Page):
             'PointsPerDollar': int(1.0 / player.session.config['real_world_currency_per_point']),
             'ShowUpFee': int(player.session.config['participation_fee']),
             'CutoffRoll': int(player.session.config['CutoffRoll']),
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoiceHistory': None,
+            'otherChoiceHistory': None,
+            'myPayoffHistory': None,
+            'otherPayoffHistory': None,
+            'tableRandomNumberHistory': None,
+            'tableNumberHistory': None,
+            'rollHistory': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
+
         }
 
 
@@ -85,6 +122,19 @@ class Transitions(Page):
         return {
             'PointsPerDollar': int(1.0 / player.session.config['real_world_currency_per_point']),
             'ShowUpFee': int(player.session.config['participation_fee']),
+            'CutoffRoll': int(player.session.config['CutoffRoll']),
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoiceHistory': None,
+            'otherChoiceHistory': None,
+            'myPayoffHistory': None,
+            'otherPayoffHistory': None,
+            'tableRandomNumberHistory': None,
+            'tableNumberHistory': None,
+            'rollHistory': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
         }
 
 
@@ -92,6 +142,11 @@ class History(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': ",3,1,11",
             'roundHistory': ",1,2,3",
             'tableRandomNumberHistory': ",4,2,2",
@@ -111,6 +166,11 @@ class TransitionsExample(Page):
     @staticmethod
     def vars_for_template(player: Player):
         temp = {
+            'tableRandomNumber': None,
+            'tableNumber': None,
+            'myChoice': None,
+            'otherChoice': None,
+            'ShowQueue': None,
             'rollHistory': ",3,1,11",
             'roundHistory': ",1,2,3",
             'tableRandomNumberHistory': ",4,2,2",
