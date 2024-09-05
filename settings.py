@@ -21,8 +21,8 @@ SESSION_CONFIGS = [
 
         'ShowQueue': 'before',
         'CutoffRoll': 11,
-        'Sequence': 2,
-        'Matches': 40,
+        'Sequence': 1,
+        'Matches': 40, #<--- this is for instructions. the length is actually determined by the lenghs of a list in constants
 
         'doc': """
     'Sequence' parameter determines which sequence of supergame lengths is used.
@@ -43,7 +43,7 @@ SESSION_CONFIGS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=5.00, doc=""
+    real_world_currency_per_point=.004, participation_fee=5.00, doc=""
 )
 
 PARTICIPANT_FIELDS = []
@@ -59,9 +59,9 @@ USE_POINTS = True
 
 ROOMS = [
     dict(
-        name='econ101',
-        display_name='Econ 101 class',
-        participant_label_file='_rooms/econ101.txt',
+        name='Lab',
+        display_name='VSEEL LAB',
+        participant_label_file='_rooms/VSEEL.txt',
     ),
     dict(name='live_demo', display_name='Room for live demo (no participant labels)'),
 ]
@@ -71,7 +71,7 @@ ADMIN_USERNAME = 'admin'
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
 DEMO_PAGE_INTRO_HTML = """
-Here are some oTree games.
+Cooperaiton in Queueing Systems: https://doi.org/10.1287/mnsc.2020.00603
 """
 
 
