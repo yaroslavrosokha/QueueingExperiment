@@ -1,0 +1,40 @@
+{% extends "DynamicQueue_09_Feedback/myPage.html" %}
+{% load staticfiles otree %}
+
+
+{% block scripts %}
+
+    <!-- define a script -->
+    <script>
+
+
+
+
+    </script>
+
+{% endblock %}
+
+
+{% block title %}
+
+    Thank You for Participating!
+
+{% endblock %}
+
+{% block content %}
+
+    <br/>
+    <p style="text-align: center; top: 100px;">
+        Your total earnings, including the show-up fee, are ${{ earningsTotal|json }}.
+    </p>
+
+    <p style="text-align: center; padding-top: 100px;">
+        Please wait patiently until everyone else is done with the experiment.
+    </p>
+
+
+    <p style="text-align: center; padding-top: 100px;">
+        When you fill out the Receipt, please round your earning up to the nearest quarter. For example, if your total earnings are $20.12, you will be paid $20.25.
+    </p>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "otree/Page.html" %}
+{% load staticfiles otree %}
+
+{% block app_styles %}
+    {% include 'DynamicQueue_05_Experiment/commonCSS.html' %}
+{% endblock %}
+
+{% block scripts %}
+    {% include 'DynamicQueue_05_Experiment/commonJS.html' %}
+
+    <script>
+
+        MyVariables = {'period':6};
+
+        ShowHistory();
+        ShowOneEntry(5,'period',6,'white','black');
+        ShowOneEntry(5,'tableRandomNumber',3,'white','black');
+        ShowOneEntry(5,'tableNumber',4,'var(--B-color)','black');
+        ShowOneEntry(5,'myChoice',2,'var(--C-color)','black');
+        ShowOneEntry(5,'otherChoice',1,'var(--D-color)','black');
+        ShowOneEntry(5,'otherPayoff',68,'white','black');
+        ShowOneEntry(5,'myPayoff',28,'white','black');
+        ShowOneEntry(5,'diceRoll','?','white','black');
+
+    </script>
+{% endblock %}
+
+
+
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block content %}
+
+    {% include 'DynamicQueue_05_Experiment/commonHTML_PayoffTables.html' %}
+    <br>
+    {% include 'DynamicQueue_05_Experiment/commonHTML_History.html' %}
+
+
+    <div class="card-body" style="text-align: left">
+        <p><strong style="color: blue">Question 10:</strong> What is the probability that the match will continue to the next round? (rounded to the nearest integer)</p>
+        <p style="text-align: center">
+                <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(0)">0 %</button>
+            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(17)">17 %</button>
+                <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(25)">25 %</button>
+            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(33)">33 %</button>
+                            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(50)">50 %</button>
+                        <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(67)">67 %</button>
+                            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(75)">75 %</button>
+                            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(83)">83 %</button>
+                            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="answerContinuation(100)">100 %</button>
+            </p>
+
+        <p style="text-align: center;" id="quizMessage"></p>
+
+    </div>
+<button class="otree-btn-next btn btn-primary" id="NextButton" style="display:none;">Continue</button>
+    <input type="hidden" name="quizHistory10" value="," id="id_testingHistory"/>
+{% endblock %}

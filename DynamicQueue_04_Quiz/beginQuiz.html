@@ -1,0 +1,35 @@
+{% extends "DynamicQueue_02_Introduction/myPage.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block content %}
+    <div class="card bg-light instructions">
+    <div class="card-body">
+    <p align="justify">Next, there will be a quiz with 10 questions.</p>
+
+    <p align="justify">
+        You have to answer each question correctly in order to proceed to the next question.
+    </p>
+
+    <p align="justify">
+        If you answer a question incorrectly, you will see a hint. At that point you will have an opportunity to answer again.
+    </p>
+
+    <p align="justify">
+        Throughout the quiz, you may refer to the printed instructions.
+    </p>
+
+
+    </p>
+            <p style="text-align: center"><br/>
+                <button class="otree-btn-next btn btn-primary" id="NextButton" style="display:inline-block;">Begin Quiz</button>
+            </p>
+
+    </div>
+
+    </div>
+
+{% endblock %}

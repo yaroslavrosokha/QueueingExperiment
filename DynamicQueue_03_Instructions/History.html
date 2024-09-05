@@ -1,0 +1,65 @@
+{% extends "otree/Page.html" %}
+{% load staticfiles otree %}
+
+{% block app_styles %}
+    {% include 'DynamicQueue_05_Experiment/commonCSS.html' %}
+{% endblock %}
+
+{% block scripts %}
+    {% include 'DynamicQueue_05_Experiment/commonJS.html' %}
+
+    <script>
+
+        MyVariables = {'period':0};
+        ShowHistory();
+
+    </script>
+{% endblock %}
+
+
+
+
+{% block title %}
+    How History Will be Recorded
+{% endblock %}
+
+{% block content %}
+
+    {% include 'DynamicQueue_05_Experiment/commonHTML_History.html' %}
+    <br>
+
+    <div class="card-body" style="text-align: left">
+
+
+        </br>
+
+        <p>The history of all variables will be recorded in a history table like the one presented above. In this table
+            you can see an example history of a match in which the computer picked actions at random. The recorded variables include:
+            <ul>
+                <li>Round -- round number.</li>
+                <li>Number of New Tasks -- a random draw in that round (one number is drawn from {2,3,4} with each number is equally likely).</li>
+                <li># of Tasks in the Queue -- number of tasks in the queue in that round (either
+            <strong class="inlineTable2">2</strong>, <strong class="inlineTable3">3</strong>, or <strong class="inlineTable4">4</strong>).</li>
+                <li>My Choice -- your choice (either <strong class="inlineOption1">1</strong>
+            or <strong class="inlineOption2">2</strong>)</li>
+            <li>Other's Choice -- the choice by the participant that you are paired with in that match (either <strong class="inlineOption1">1</strong>
+                or <strong class="inlineOption2">2</strong>)</li>
+            <li>My Payoff -- your payoff in that round.</li>
+            <li>Other's Payoff -- the payoff of the the participant that you are paired with in that match.</li>
+            </ul>
+        </p>
+
+
+    <p> Reminder, your earnings for the experiment will
+        be the sum of your points across all matches converted into
+            cash at the exchange rate of {{ PointsPerDollar }} points = $1. In addition, you will be paid your show-up
+            fee of ${{ ShowUpFee }}.  </p>
+
+
+    <p style="text-align: center"><br/><br/>
+                <button class="otree-btn-next btn btn-primary" id="NextButton" style="display:inline-block;">Continue</button>
+    </p>
+
+    </div>
+
+{% endblock %}

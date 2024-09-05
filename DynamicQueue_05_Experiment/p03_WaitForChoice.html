@@ -1,0 +1,55 @@
+{% extends 'otree/WaitPage.html' %}
+{% load otree %}
+
+
+{% block title %}
+
+    Match #{{ player.matchNumber }}
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="_otree-content">
+    <p style="font-size: 16px;color: gray;">Reminders: each round, either 2, 3, or 4 tasks arrive (each with probability 1/3); the leftover tasks (if any) from one round are kept for the next round;
+        the queue is capped at 4 (any tasks that arrive beyond the limit of 4 are discarded.)</p>
+    <p id="id_info_before" style="display: none">In Round <strong id="round_number_before">X</strong>, <strong id="new_arrivals" style="color: red">X new</strong> tasks arrived for processing before you make your capacity decision, which means there are now <strong id="queue_totals">X</strong> tasks in the queue.</p>
+    <p id="id_info_after" style="display: none">In Round <strong id="round_number_after">X</strong>, 2, 3, or 4 tasks will arrive for processing after you make your capacity decision.</p>
+
+        {% include 'DynamicQueue_05_Experiment/commonHTML_History.html' %}
+        <br>
+        <div class="column" style="background-color:#ffffff;text-align: center;">
+            <p style="font-size: 18px;color: gray;z-index: 6; position: relative;">Please wait while the other participant makes a choice.</p>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block app_scripts %}
+    {% include 'DynamicQueue_05_Experiment/commonJS.html' %}
+
+    <script>
+        MyVariables = {'period': 0};
+        ShowHistory();
+        ShowCurrentPeriod();
+                if( {{ ShowQueue | json }} ){
+                show('id_info_before');
+                ShowState();
+                var p=MyVariables.period+1;
+                updateText('round_number_before',p);
+            }else{
+                show('id_info_after');
+                var p=MyVariables.period+1;
+                updateText('round_number_after',p);
+            }
+    </script>
+
+{% endblock %}
+
+
+{% block app_styles %}
+
+    {% include 'DynamicQueue_05_Experiment/commonCSS.html' %}
+
+{% endblock %}

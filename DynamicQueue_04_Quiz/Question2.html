@@ -1,0 +1,75 @@
+{% extends "otree/Page.html" %}
+{% load staticfiles otree %}
+
+{% block app_styles %}
+    {% include 'DynamicQueue_05_Experiment/commonCSS.html' %}
+{% endblock %}
+
+{% block scripts %}
+    {% include 'DynamicQueue_05_Experiment/commonJS.html' %}
+
+    <script>
+
+        MyVariables = {'period':0};
+        ShowHistory();
+        ShowOneEntry(0,'period',1,'white','black');
+        ShowOneEntry(0,'tableRandomNumber',3,'white','black');
+        ShowOneEntry(0,'tableNumber',3,'var(--G-color)','black');
+        ShowOneEntry(0,'myChoice',2,'var(--C-color)','black');
+        ShowOneEntry(0,'otherChoice',1,'var(--D-color)','black');
+        ShowOneEntry(0,'myPayoff','?','var(--N-color)','black');
+
+    </script>
+{% endblock %}
+
+
+
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block content %}
+
+    {% include 'DynamicQueue_05_Experiment/commonHTML_PayoffTables.html' %}
+    <br>
+    {% include 'DynamicQueue_05_Experiment/commonHTML_History.html' %}
+
+
+    <div class="card-body" style="text-align: left">
+        <p><strong style="color: blue">Question 2:</strong> If you choose <strong class="inlineOption2" >2</strong> and the
+            participant you are paired with chooses <strong class="inlineOption1">1</strong>, what will be your payoff in Round 1?</p>
+        <p style="text-align: center">
+
+            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="incorrectAnswer('That is incorrect. Please try again. Hint: In Round 1 of this example, there are 3 tasks in the queue.')">14</button>
+
+            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="incorrectAnswer('That is incorrect. Please try again. Hint: In Round 1 of this example, there are 3 tasks in the queue.')">24</button>
+
+            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="correctAnswer('Correct.')">28</button>
+
+            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="incorrectAnswer('That is incorrect. Please try again. Hint: In Round 1 of this example, there are 3 tasks in the queue.')">32</button>
+
+            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="incorrectAnswer('That is incorrect. Please try again. In Round 1 of this example, there are 3 tasks in the queue.')">44</button>
+
+            <button class="otree-btn-next btn btn-primary" id="startMatchButton" type="button"
+                style="background-color: var(--N-color); border-color: black; color: black; font-weight: bold"
+            onclick="incorrectAnswer('That is incorrect. Please try again. Hint: In Round 1 of this example, there are 3 tasks in the queue.')">68</button>
+            </p>
+
+        <p style="text-align: center;" id="quizMessage"></p>
+
+
+    </div>
+<button class="otree-btn-next btn btn-primary" id="NextButton" style="display:none;">Continue</button>
+    <input type="hidden" name="quizHistory2" value="," id="id_testingHistory"/>
+{% endblock %}
